@@ -148,7 +148,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Fennel Network - Demonstration Application</h1>
+      <h1>OneTrust</h1>
       <Tabs
         activeKey={key}
         onSelect={(k) => setKey(k)}
