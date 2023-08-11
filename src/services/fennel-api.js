@@ -130,24 +130,6 @@ export default class FennelAPIService {
       });
   }
 
-  async getAccountsBillableCount(api_group_name, auth_token) {
-    return this.apiClient
-      .post(
-        "/group/get_accounts_billable_count/",
-        {
-          api_group_name: api_group_name,
-        },
-        {
-          headers: {
-            Authorization: "Token " + auth_token,
-          },
-        }
-      )
-      .then((response) => {
-        return response.data;
-      });
-  }
-
   async getAPIGroupRequestCount(api_group_name, auth_token) {
     return this.apiClient
       .post(

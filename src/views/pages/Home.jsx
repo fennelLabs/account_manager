@@ -15,7 +15,6 @@ export default function Home() {
   const services = useServices();
 
   const [key, setKey] = useState("register");
-  const [usageAccountsError, setUsageAccountsError] = useState("");
   const [usageRequestsError, setUsageRequestsError] = useState("");
 
   const [accountMessage, setAccountMessage] = useState("");
@@ -28,7 +27,6 @@ export default function Home() {
   const [address, setAddress] = useState("");
   const [json, setJson] = useState("");
 
-  const [accounts, setAccounts] = useState(0);
   const [requests, setRequests] = useState(0);
 
   const updateUsage = () => {
@@ -38,15 +36,6 @@ export default function Home() {
     if (apiGroupName === "") {
       return;
     }
-    services.fennelAPI
-      .getAccountsBillableCount(apiGroupName, authToken)
-      .then((response) => {
-        setAccounts(response.count);
-        setUsageAccountsError("");
-      })
-      .catch(() => {
-        setUsageAccountsError("Couldn't get accounts for this API group.");
-      });
     services.fennelAPI
       .getAPIGroupRequestCount(apiGroupName, authToken)
       .then((response) => {
@@ -204,9 +193,7 @@ export default function Home() {
         </Tab>
         <Tab eventKey="usage" title="Usage">
           <h1>Usage</h1>
-          {usageAccountsError}
           {usageRequestsError}
-          <div>Accounts: {accounts}</div>
           <div>Requests: {requests}</div>
           <Button onClick={updateUsage}>Update Usage</Button>
         </Tab>
