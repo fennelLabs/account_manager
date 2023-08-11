@@ -118,12 +118,13 @@ export default class FennelAPIService {
       });
   }
 
-  async createAPIGroup(api_group_name, authToken) {
+  async createAPIGroup(api_group_name, email, authToken) {
     return this.apiClient
       .post(
         "/group/create/",
         {
           api_group_name: api_group_name,
+          email: email,
         },
         {
           headers: {

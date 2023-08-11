@@ -26,6 +26,7 @@ export default function Home() {
   const [mnemonic, setMnemonic] = useState("");
   const [address, setAddress] = useState("");
   const [json, setJson] = useState("");
+  const [email, setEmail] = useState("");
 
   const [requests, setRequests] = useState(0);
 
@@ -47,9 +48,10 @@ export default function Home() {
       });
   };
 
-  const onSubmitRegister = async (username, password, email) => {
+  const onSubmitRegister = async (username, password, email_address) => {
+    setEmail(email_address);
     await services.fennelAPI
-      .register(username, password, email)
+      .register(username, password, email_address)
       .then((response) => {
         setAuthToken(response.token);
         setKey("settings");
@@ -77,7 +79,7 @@ export default function Home() {
 
   const createAPIGroup = () => {
     services.fennelAPI
-      .createAPIGroup(apiGroupName, authToken)
+      .createAPIGroup(apiGroupName, email, authToken)
       .then((response) => {
         setApiKey(response.api_key);
         setApiSecret(response.api_secret);
