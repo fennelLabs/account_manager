@@ -25,7 +25,7 @@ export default function RegisterForm(props) {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="username">
+            <Form.Group className="mb-3">
                 <Form.Label htmlFor="username">Username</Form.Label>
                 <Form.Control
                     type="text"
@@ -33,7 +33,7 @@ export default function RegisterForm(props) {
                     onChange={handleUsernameChange}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="email">
+            <Form.Group className="mb-3">
                 <Form.Label htmlFor="email">Email</Form.Label>
                 <Form.Control
                     type="email"
@@ -41,7 +41,7 @@ export default function RegisterForm(props) {
                     onChange={handleEmailChange}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3">
                 <Form.Label htmlFor="password">Password</Form.Label>
                 <Form.Control
                     type="password"
@@ -49,7 +49,7 @@ export default function RegisterForm(props) {
                     onChange={handlePasswordChange}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="passwordConfirm">
+            <Form.Group className="mb-3">
                 <Form.Label htmlFor="passwordConfirm">Confirm Password</Form.Label>
                 <Form.Control
                     type="password"

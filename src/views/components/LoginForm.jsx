@@ -17,7 +17,7 @@ export default function LoginForm(props) {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="username">
+            <Form.Group className="mb-3">
                 <Form.Label>Username</Form.Label>
                 <Form.Control
                     type="text"
@@ -25,7 +25,7 @@ export default function LoginForm(props) {
                     onChange={handleUsernameChange}
                 />
             </Form.Group>
-            <Form.Group className="mb-3" controlId="password">
+            <Form.Group className="mb-3">
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                     type="password"
