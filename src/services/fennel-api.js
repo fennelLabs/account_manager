@@ -15,7 +15,10 @@ export default class FennelAPIService {
         password: password,
       })
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          token: response.data.token,
+        };
       });
   }
 
@@ -26,12 +29,93 @@ export default class FennelAPIService {
         password: password,
       })
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          token: response.data.token,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
   async logout() {
-    return this.apiClient.post("/auth/logout/");
+    return this.apiClient
+      .post("/auth/logout/")
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async changePassword(old_password, new_password, authToken) {
+    return this.apiClient
+
+      .post(
+        "/auth/change_password/",
+        {
+          old_password: old_password,
+          new_password: new_password,
+        },
+        {
+          headers: {
+            Authorization: "Token " + authToken,
+          },
+        }
+      )
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async resetPassword(email) {
+    return this.apiClient
+      .post("/auth/reset_password/", {
+        email: email,
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async resetPasswordConfirm(token, new_password) {
+    return this.apiClient
+      .post("/auth/reset_password_confirm/", {
+        token: token,
+        new_password: new_password,
+      })
+      .then((_) => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
   }
 
   async createAPIGroup(api_group_name, authToken) {
@@ -48,17 +132,36 @@ export default class FennelAPIService {
         }
       )
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          api_group_name: response.data.api_group_name,
+          api_key: response.data.api_key,
+          api_secret: response.data.api_secret,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
-  async addUserToAPIGroup(username, api_group_name, authToken) {
+  async addUserToAPIGroup(
+    username,
+    api_group_name,
+    api_key,
+    api_secret,
+    authToken
+  ) {
     return this.apiClient
       .post(
         "/group/add_user/",
         {
           username: username,
           api_group_name: api_group_name,
+          api_key: api_key,
+          api_secret: api_secret,
         },
         {
           headers: {
@@ -66,8 +169,122 @@ export default class FennelAPIService {
           },
         }
       )
-      .then((response) => {
-        return response.data;
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async removeUserFromAPIGroup(
+    username,
+    api_group_name,
+    api_key,
+    api_secret,
+    authToken
+  ) {
+    return this.apiClient
+      .post(
+        "/group/remove_user/",
+        {
+          username: username,
+          api_group_name: api_group_name,
+          api_key: api_key,
+          api_secret: api_secret,
+        },
+        {
+          headers: {
+            Authorization: "Token " + authToken,
+          },
+        }
+      )
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async addAdminToAPIGroup(
+    username,
+    api_group_name,
+    api_key,
+    api_secret,
+    authToken
+  ) {
+    return this.apiClient
+
+      .post(
+        "/group/add_admin/",
+        {
+          username: username,
+          api_group_name: api_group_name,
+          api_key: api_key,
+          api_secret: api_secret,
+        },
+        {
+          headers: {
+            Authorization: "Token " + authToken,
+          },
+        }
+      )
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
+      });
+  }
+
+  async removeAdminFromAPIGroup(
+    username,
+    api_group_name,
+    api_key,
+    api_secret,
+    authToken
+  ) {
+    return this.apiClient
+      .post(
+        "/group/remove_admin/",
+        {
+          username: username,
+          api_group_name: api_group_name,
+          api_key: api_key,
+          api_secret: api_secret,
+        },
+        {
+          headers: {
+            Authorization: "Token " + authToken,
+          },
+        }
+      )
+      .then(() => {
+        return {
+          success: true,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
@@ -86,11 +303,28 @@ export default class FennelAPIService {
         }
       )
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          user_shard: response.data.user_shard,
+          recovery_shard: response.data.recovery_shard,
+          address: response.data.address,
+          public_key: response.data.public_key,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
-  async reconstructSelfCustodialAccount(user_shard, api_key, api_secret, authToken) {
+  async reconstructSelfCustodialAccount(
+    user_shard,
+    api_key,
+    api_secret,
+    authToken
+  ) {
     return this.apiClient
       .post(
         "/onetrust/reconstruct_self_custodial_account/",
@@ -106,7 +340,16 @@ export default class FennelAPIService {
         }
       )
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          mnemonic: response.data.mnemonic,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
@@ -126,7 +369,16 @@ export default class FennelAPIService {
         }
       )
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          json: response.data.json,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 
@@ -144,7 +396,16 @@ export default class FennelAPIService {
         }
       )
       .then((response) => {
-        return response.data;
+        return {
+          success: true,
+          count: response.data.count,
+        };
+      })
+      .catch((error) => {
+        return {
+          success: false,
+          error: error.response.data.error,
+        };
       });
   }
 }
