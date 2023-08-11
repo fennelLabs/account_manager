@@ -75,6 +75,7 @@ export default function Home() {
       .createAccount(apiKey, apiSecret, authToken)
       .then((response) => {
         setUserShard(response.user_shard);
+        setAddress(response.address);
         setAccountMessage(
           "Account created successfully. Your share of the key is saved safely on your device, and only on your device. You can ONLY recover your wallet with that share."
         );
@@ -106,19 +107,6 @@ export default function Home() {
       .catch((error) => {
         console.log(error);
         setMnemonic("Couldn't get mnemonic.");
-      });
-  }
-
-  function getAddress() {
-    console.log(mnemonic);
-    services.fennelAPI
-      .getAddress(mnemonic, authToken, apiKey, apiSecret)
-      .then((response) => {
-        setAddress(response.address);
-      })
-      .catch((error) => {
-        console.log(error);
-        setAddress("Couldn't get address.");
       });
   }
 
@@ -168,7 +156,6 @@ export default function Home() {
                 <Button onClick={reconstructSelfCustodialAccount}>
                   Get Mnemonic
                 </Button>
-                <Button onClick={getAddress}>Get Address</Button>
                 <Button onClick={downloadAccountAsJson}>Download JSON</Button>
               </ButtonGroup>
             </div>

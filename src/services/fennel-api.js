@@ -74,7 +74,7 @@ export default class FennelAPIService {
   async createAccount(api_key, api_secret, authToken) {
     return this.apiClient
       .post(
-        "/fennel/create_self_custodial_account/",
+        "/onetrust/create_self_custodial_account/",
         {
           api_key: api_key,
           api_secret: api_secret,
@@ -93,29 +93,9 @@ export default class FennelAPIService {
   async reconstructSelfCustodialAccount(user_shard, api_key, api_secret, authToken) {
     return this.apiClient
       .post(
-        "/fennel/reconstruct_self_custodial_account/",
+        "/onetrust/reconstruct_self_custodial_account/",
         {
           user_shard: user_shard,
-          api_key: api_key,
-          api_secret: api_secret,
-        },
-        {
-          headers: {
-            Authorization: "Token " + authToken,
-          },
-        }
-      )
-      .then((response) => {
-        return response.data;
-      });
-  }
-
-  async getAddress(mnemonic, authToken, api_key, api_secret) {
-    return this.apiClient
-      .post(
-        "/fennel/get_self_custodial_account_address/",
-        {
-          mnemonic: mnemonic,
           api_key: api_key,
           api_secret: api_secret,
         },
@@ -133,7 +113,7 @@ export default class FennelAPIService {
   async downloadAccountAsJson(user_shard, api_key, api_secret, auth_token) {
     return this.apiClient
       .post(
-        "/fennel/download_self_custodial_account_as_json/",
+        "/onetrust/download_self_custodial_account_as_json/",
         {
           user_shard: user_shard,
           api_key: api_key,
